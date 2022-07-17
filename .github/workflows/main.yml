@@ -15,7 +15,7 @@ jobs:
           go-version: 1.18
 
       - name: Build
-        run: go build go build GOOS=linux GOARCH=arm GOARM=7 CGO_ENABLED=1 src/main.go
+        run: go build GOOS=linux GOARCH=arm GOARM=7 CGO_ENABLED=1 src/main.go
         
       - uses: actions/upload-artifact@v2
         with:
