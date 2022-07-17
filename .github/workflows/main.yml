@@ -1,0 +1,23 @@
+name: Go package
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.18
+
+      - name: Build
+        run: go build go build GOOS=linux GOARCH=arm GOARM=7 CGO_ENABLED=1 src/main.go
+        
+      - uses: actions/upload-artifact@v2
+        with:
+          name: yarr
+          path: main
