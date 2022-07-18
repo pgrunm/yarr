@@ -1,4 +1,4 @@
-name: Go package
+name: Go build ARM binary
 
 on: [push]
 
@@ -8,14 +8,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install wget build-essential gcc-aarch64-linux-gnu \
+          binutils-aarch64-linux-gnu binutils-aarch64-linux-gnu-dbg \
+          gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf binutils-arm-linux-gnueabihf-dbg
 
       - name: Set up Go
         uses: actions/setup-go@v3
         with:
           go-version: 1.18
+          cache: true
 
       - name: Build
-        run: GOOS=linux GOARCH=arm GOARM=7 CGO_ENABLED=1 go build src/main.go
+        run: CC=arm-linux-gnueabihf-gcc GOOS=linux GOARCH=arm GOARM=7 CGO_ENABLED=1 \
+              go build -tags "sqlite_foreign_keys release linux" -ldflags="-s -w" src/main.go
         
       - uses: actions/upload-artifact@v2
         with:
