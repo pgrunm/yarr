@@ -24,7 +24,7 @@ jobs:
 
       - name: Build
         run: CC=arm-linux-gnueabihf-gcc GOOS=linux GOARCH=arm GOARM=7 CGO_ENABLED=1 \
-              go build -tags "sqlite_foreign_keys release linux" -ldflags="-s -w" src/main.go
+             go build -tags "sqlite_foreign_keys release linux" -ldflags="-s -w" src/main.go
         
       - uses: actions/upload-artifact@v2
         with:
